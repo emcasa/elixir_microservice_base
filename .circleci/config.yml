@@ -1,0 +1,50 @@
+version: 1
+jobs:
+  build:
+    parallelism: 1
+    docker:
+      - image: circleci/elixir:1.9.1
+        environment:
+          MIX_ENV: test
+
+    working_directory: ~/app
+
+    steps:
+      - checkout
+
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
+
+      - restore_cache:
+          keys:
+            - $CACHE_VERSION-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+            - $CACHE_VERSION-mix-cache-{{ .Branch }}
+            - $CACHE_VERSION-mix-cache
+      - restore_cache:
+          keys:
+            - $CACHE_VERSION-build-cache-{{ .Branch }}
+            - $CACHE_VERSION-build-cache
+      - run: mix deps.get
+      - run: mix compile --warnings-as-errors --force
+      - run: mix format --check-formatted --dry-run
+      - save_cache:
+          key: $CACHE_VERSION-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+          paths: "deps"
+      - save_cache:
+          key: $CACHE_VERSION-mix-cache-{{ .Branch }}
+          paths: "deps"
+      - save_cache:
+          key: $CACHE_VERSION-mix-cache
+          paths: "deps"
+      - save_cache:
+          key: $CACHE_VERSION-build-cache-{{ .Branch }}
+          paths: "_build"
+      - save_cache:
+          key: $CACHE_VERSION-build-cache
+          paths: "_build"
+
+      - run: mix do compile --warnings-as-errors, coveralls.json
+      - run: curl -s https://codecov.io/bash | bash
+
+      - store_test_results:
+          path: _build/test/lib/
