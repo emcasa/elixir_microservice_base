@@ -1,6 +1,7 @@
 defmodule ElixirMicroserviceBase.Router do
   use Plug.Router
 
+  plug(ElixirMicroserviceBase.PlugExporter)
   plug(Timber.Plug.HTTPContext)
   plug(Timber.Plug.Event)
   plug(:match)

@@ -4,6 +4,8 @@ defmodule ElixirMicroserviceBase.Application do
   use Application
 
   def start(_type, _args) do
+    ElixirMicroserviceBase.Metrics.setup()
+
     children = [
       Plug.Cowboy.child_spec(
         scheme: :http,
