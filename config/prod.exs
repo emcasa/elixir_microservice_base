@@ -10,6 +10,8 @@ config :timber,
   source_id: System.get_env("TIMBER_SOURCE_ID")
 
 config :sentry,
+  enable_source_code_context: true,
+  root_source_code_path: File.cwd!(),
   dsn: System.get_env("SENTRY_DSN")
 
 config :prometheus, ElixirMicroserviceBase.MetricsExporterPlug,

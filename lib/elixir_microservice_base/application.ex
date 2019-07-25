@@ -5,6 +5,7 @@ defmodule ElixirMicroserviceBase.Application do
 
   def start(_type, _args) do
     ElixirMicroserviceBase.Metrics.setup()
+    {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
 
     children = [
       Plug.Cowboy.child_spec(

@@ -1,5 +1,7 @@
 defmodule ElixirMicroserviceBase.Router do
   use Plug.Router
+  use Plug.ErrorHandler
+  use Sentry.Plug
 
   plug(ElixirMicroserviceBase.PlugExporter)
   plug(Timber.Plug.HTTPContext)
