@@ -1,0 +1,7 @@
+coverage:
+  round: nearest
+  precision: 3
+  status:
+      project:
+        default:
+          threshold: 0.3
