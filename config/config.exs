@@ -4,7 +4,7 @@ config :sentry,
   included_environments: ~w(production staging),
   environment_name: System.get_env("ENV") || "development"
 
-config :prometheus, ReWeb.PlugExporter,
+config :prometheus, ElixirMicroserviceBase.PlugExporter,
   path: "/metrics",
   format: :auto,
   registry: :default,
