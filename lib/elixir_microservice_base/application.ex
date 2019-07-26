@@ -3,6 +3,8 @@ defmodule ElixirMicroserviceBase.Application do
 
   use Application
 
+  @port Application.get_env(:elixir_microservice_base, :port, 4000)
+
   def start(_type, _args) do
     ElixirMicroserviceBase.Metrics.setup()
     {:ok, _} = Logger.add_backend(Sentry.LoggerBackend)
@@ -11,7 +13,7 @@ defmodule ElixirMicroserviceBase.Application do
       Plug.Cowboy.child_spec(
         scheme: :http,
         plug: ElixirMicroserviceBase.Router,
-        options: [port: 4000]
+        options: [port: @port]
       )
     ]
 
