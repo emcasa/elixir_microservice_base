@@ -23,3 +23,5 @@ erl_crash.dump
 elixir_microservice_base-*.tar
 
 config/dev.secret.exs
+
+.env
