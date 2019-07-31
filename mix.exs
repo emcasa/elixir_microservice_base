@@ -16,7 +16,7 @@ defmodule ElixirMicroserviceBase.Umbrella.Mixfile do
 
   def application do
     [
-      extra_applications: [:logger, :peerage],
+      extra_applications: [:logger],
       mod: {ElixirMicroserviceBase.Application, []}
     ]
   end
@@ -37,8 +37,7 @@ defmodule ElixirMicroserviceBase.Umbrella.Mixfile do
       {:plug_cowboy, "~> 2.0"},
       {:plug_checkup, "~> 0.5"},
       {:httpoison, "~> 1.3"},
-      {:telemetry, "~> 0.4"},
-      {:peerage, "~> 1.0"}
+      {:telemetry, "~> 0.4"}
     ]
   end
 

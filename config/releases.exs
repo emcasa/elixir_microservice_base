@@ -3,6 +3,11 @@ import Config
 config :elixir_microservice_base,
   port: System.fetch_env!("PORT")
 
+config :logger, :console, level: :info
+
+config :logger,
+  backends: [Timber.LoggerBackends.HTTP]
+
 config :timber,
   api_key: System.fetch_env!("TIMBER_API_KEY"),
   source_id: System.fetch_env!("TIMBER_SOURCE_ID")
@@ -14,8 +19,3 @@ config :sentry,
 
 config :prometheus, ElixirMicroserviceBase.MetricsExporterPlug,
   auth: {:basic, System.fetch_env!("PROMETHEUS_USER"), System.fetch_env!("PROMETHEUS_PASS")}
-
-config :peerage,
-  via: Peerage.Via.Dns,
-  dns_name: System.fetch_env!("SERVICE_NAME"),
-  app_name: "elixir_microservice_base"
